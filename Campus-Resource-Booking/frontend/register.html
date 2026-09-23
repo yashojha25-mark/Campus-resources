@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Register | Campus Resource Booking</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/navbar.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <nav class="navbar" aria-label="Main navigation">
+        <a class="navbar__brand" href="index.html">Campus Resource Booking</a>
+        <button class="navbar__toggle" type="button" aria-label="Toggle navigation" aria-expanded="false">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+        <ul class="navbar__links">
+          <!-- Shown while logged out -->
+          <li data-auth="guest"><a href="resources.html">Resources</a></li>
+          <li data-auth="guest"><a href="login.html">Login</a></li>
+
+          <!-- Shown while logged in -->
+          <li data-auth="user" hidden><a href="dashboard.html">Dashboard</a></li>
+          <li data-auth="user" hidden><a href="resources.html">Resources</a></li>
+          <li data-auth="user" hidden><a href="my-bookings.html">All Bookings</a></li>
+          <li data-auth="user" data-auth-role="admin" hidden><a href="admin.html">Admin</a></li>
+          <li data-auth="user" hidden>
+            <span class="navbar__user" data-auth-user-name></span>
+          </li>
+          <li data-auth="user" hidden><button class="navbar__logout" type="button" id="logout-button">Logout</button></li>
+        </ul>
+      </nav>
+    </header>
+
+    <main>
+      <section class="auth-section" aria-labelledby="register-title">
+        <h1 id="register-title">Create Account</h1>
+
+        <!-- Success / loading / error feedback for the register request -->
+        <div id="auth-message" class="message" aria-live="polite" hidden></div>
+
+        <form id="register-form">
+          <div class="form-group">
+            <label for="register-name">Name</label>
+            <input id="register-name" name="name" type="text" autocomplete="name" required />
+          </div>
+          <div class="form-group">
+            <label for="register-email">Email</label>
+            <input id="register-email" name="email" type="email" autocomplete="email" required />
+          </div>
+          <div class="form-group">
+            <label for="register-password">Password</label>
+            <input
+              id="register-password"
+              name="password"
+              type="password"
+              autocomplete="new-password"
+              minlength="8"
+              aria-describedby="register-password-hint"
+              required
+            />
+            <p id="register-password-hint" class="field-hint">At least 8 characters.</p>
+          </div>
+
+          <!-- No role picker: public registration always creates a student.
+               Administrator accounts are created by an existing admin or
+               seeded directly in the database. -->
+          <p class="field-hint field-hint--note">
+            New accounts are created as <strong>students</strong>. Administrator access is
+            granted separately.
+          </p>
+
+          <button type="submit">Register</button>
+        </form>
+      </section>
+    </main>
+
+        <script src="js/main.js"></script>
+        <script src="js/api.js"></script>
+        <script src="js/ui.js"></script>
+        <script src="js/auth.js"></script>
+     </body>
+    </html>

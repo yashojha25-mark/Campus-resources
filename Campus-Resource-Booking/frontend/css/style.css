@@ -1,0 +1,700 @@
+:root {
+  --color-navy-950: #101826;
+  --color-navy-900: #172033;
+  --color-navy-800: #22304a;
+  --color-text: #182132;
+  --color-muted: #647084;
+  --color-border: #d8dee8;
+  --color-surface: #ffffff;
+  --color-surface-soft: #f5f7fa;
+  --color-accent: #147d80;
+  --color-accent-dark: #0f6264;
+  --color-accent-soft: #e4f4f4;
+  --shadow-sm: 0 1px 2px rgba(16, 24, 38, 0.08);
+  --shadow-md: 0 10px 28px rgba(16, 24, 38, 0.12);
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --container: 1180px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* Accessible label that stays available to screen readers but is not shown. */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  border: 0;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--color-surface-soft);
+  color: var(--color-text);
+  font-family:
+    Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+main > section,
+main > article {
+  width: min(100% - 2rem, var(--container));
+  margin-inline: auto;
+}
+
+h1,
+h2,
+h3,
+p {
+  margin-top: 0;
+}
+
+h1,
+h2,
+h3 {
+  color: var(--color-navy-950);
+  line-height: 1.15;
+}
+
+h1 {
+  font-size: clamp(2.25rem, 5vw, 4.5rem);
+  letter-spacing: 0;
+}
+
+h2 {
+  font-size: clamp(1.6rem, 2.4vw, 2.25rem);
+}
+
+h3 {
+  font-size: 1.05rem;
+}
+
+p {
+  color: var(--color-muted);
+}
+
+.section-heading {
+  margin-bottom: var(--space-5);
+}
+
+.section-heading p {
+  margin-bottom: var(--space-2);
+  color: var(--color-accent-dark);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.section-heading h2 {
+  margin-bottom: 0;
+}
+
+.button,
+button {
+  display: inline-flex;
+  min-height: 2.75rem;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  padding: 0.7rem 1rem;
+  background: var(--color-navy-900);
+  color: #ffffff;
+  cursor: pointer;
+  font: inherit;
+  font-weight: 700;
+  transition:
+    background-color 180ms ease,
+    border-color 180ms ease,
+    box-shadow 180ms ease,
+    transform 180ms ease;
+}
+
+.button:hover,
+button:hover {
+  background: var(--color-navy-800);
+  box-shadow: var(--shadow-sm);
+  transform: translateY(-1px);
+}
+
+.button:focus-visible,
+button:focus-visible,
+a:focus-visible {
+  outline: 3px solid rgba(20, 125, 128, 0.28);
+  outline-offset: 3px;
+}
+
+.button--primary {
+  background: var(--color-accent);
+}
+
+.button--primary:hover {
+  background: var(--color-accent-dark);
+}
+
+.resource-categories,
+.featured-resources {
+  padding-block: var(--space-7);
+}
+
+.page-header,
+.resource-filters,
+.resource-list,
+.auth-section,
+.booking-list,
+.resource-details {
+  padding-top: var(--space-6);
+}
+
+.resource-list,
+.booking-list,
+.resource-details {
+  padding-bottom: var(--space-7);
+}
+
+form {
+  display: grid;
+  gap: var(--space-4);
+}
+
+label {
+  color: var(--color-navy-900);
+  font-weight: 700;
+}
+
+input,
+select,
+textarea {
+  width: 100%;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: 0.75rem 0.85rem;
+  background: #ffffff;
+  color: var(--color-text);
+  font: inherit;
+  transition:
+    border-color 180ms ease,
+    box-shadow 180ms ease;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 3px rgba(20, 125, 128, 0.16);
+  outline: none;
+}
+
+.resource-filters form {
+  /* Five fields + an actions cell. `auto-fit` on the fields alone keeps every
+     control the same width and lets the row wrap cleanly on narrow screens;
+     the actions cell is sized to its button so it never claims a whole column.
+     See filters.css for the .filter-field layout. */
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  align-items: end;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-sm);
+}
+
+/* The actions cell rides along in the row, sized to its button. */
+.resource-filters .filter-actions {
+  justify-content: flex-end;
+}
+
+/* Note: the admin page also uses .resource-filters, but its own .admin-filters
+   rule (admin.css, loaded later) overrides this grid. */
+
+.message {
+  min-height: 1.5rem;
+  margin-bottom: var(--space-4);
+  color: var(--color-muted);
+  font-weight: 700;
+}
+
+/* Small helper text under a form field (e.g. the password rule). */
+.field-hint {
+  margin: var(--space-1) 0 0;
+  color: var(--color-muted);
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
+.field-hint--note {
+  border-left: 3px solid var(--color-accent);
+  padding: var(--space-2) var(--space-3);
+  background: var(--color-accent-soft);
+  color: var(--color-navy-800);
+}
+
+.message--success {
+  color: var(--color-accent-dark);
+}
+
+.message--error {
+  color: #9f2f2f;
+}
+
+.message--loading {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  color: var(--color-navy-800);
+}
+
+.message a {
+  color: var(--color-accent-dark);
+  text-decoration: underline;
+}
+
+/* --- async state blocks (loading / empty) used by ui.js ------------------ */
+
+.state {
+  display: grid;
+  justify-items: center;
+  gap: var(--space-3);
+  width: 100%;
+  border: 1px dashed var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-6) var(--space-4);
+  background: var(--color-surface);
+  text-align: center;
+}
+
+.state p {
+  margin: 0;
+}
+
+.state h3 {
+  margin: 0;
+}
+
+/* A grid container that only holds a .state block should span all columns. */
+.resource-grid .state {
+  grid-column: 1 / -1;
+}
+
+.spinner {
+  display: inline-block;
+  width: 1.5rem;
+  height: 1.5rem;
+  border: 3px solid rgba(20, 125, 128, 0.25);
+  border-top-color: var(--color-accent);
+  border-radius: 50%;
+  animation: spin 700ms linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .spinner {
+    animation-duration: 2s;
+  }
+}
+
+/* --- navbar session state ---------------------------------------------- */
+
+.navbar__user {
+  color: inherit;
+  font-weight: 700;
+}
+
+.navbar__logout {
+  min-height: auto;
+  padding: 0.4rem 0.75rem;
+  background: transparent;
+  border-color: currentColor;
+  color: inherit;
+  font-size: 0.85rem;
+}
+
+.navbar__logout:hover {
+  background: rgba(255, 255, 255, 0.12);
+  transform: none;
+}
+
+/* --- booking cards ------------------------------------------------------ */
+
+.booking-card__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-top: var(--space-3);
+}
+
+.booking-card__note {
+  margin: 0;
+  color: var(--color-muted);
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.button--danger {
+  background: #9f2f2f;
+}
+
+.button--danger:hover {
+  background: #7f2626;
+}
+
+/* status colours for the booking status badge */
+.resource-card__category--confirmed {
+  color: var(--color-accent-dark);
+}
+
+.resource-card__category--pending {
+  color: #8a6100;
+}
+
+.resource-card__category--cancelled,
+.resource-card__category--completed {
+  color: var(--color-muted);
+}
+
+/* --- page header (resources / my-bookings) ------------------------------ */
+
+.page-header h1 {
+  margin-bottom: var(--space-3);
+  font-size: clamp(1.9rem, 4vw, 2.75rem);
+}
+
+.page-header p {
+  max-width: 65ch;
+  margin-bottom: 0;
+}
+
+/* --- how it works ------------------------------------------------------- */
+
+.how-it-works {
+  padding-block: var(--space-7);
+}
+
+.steps-list {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-5);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: step;
+}
+
+.steps-list li {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-5);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-sm);
+}
+
+.steps-list h3 {
+  margin-bottom: var(--space-2);
+}
+
+.steps-list p {
+  margin-bottom: 0;
+  font-size: 0.92rem;
+}
+
+/* --- campus statistics -------------------------------------------------- */
+
+.campus-statistics {
+  padding-block: var(--space-7);
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--space-4);
+  margin: 0;
+}
+
+.stats-grid > div {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-5);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-sm);
+  text-align: center;
+}
+
+.stats-grid dt {
+  margin-bottom: var(--space-1);
+  color: var(--color-muted);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.stats-grid dd {
+  margin: 0;
+  color: var(--color-accent-dark);
+  font-size: 2rem;
+  font-weight: 800;
+  line-height: 1.1;
+}
+
+/* --- closing call to action --------------------------------------------- */
+
+.cta-section {
+  margin-block: var(--space-7);
+  border-radius: var(--radius-md);
+  padding: var(--space-7) var(--space-5);
+  background: var(--color-navy-950);
+  text-align: center;
+}
+
+.cta-section h2 {
+  margin-bottom: var(--space-3);
+  color: #ffffff;
+  font-size: clamp(1.5rem, 3vw, 2.25rem);
+}
+
+.cta-section p {
+  margin-bottom: var(--space-5);
+  color: #cbd3df;
+}
+
+/* --- resource details (resource-details.html) --------------------------- */
+
+.resource-details header h1 {
+  margin-bottom: var(--space-2);
+  font-size: clamp(1.8rem, 3.6vw, 2.6rem);
+}
+
+.resource-details > figure {
+  margin: var(--space-5) 0;
+}
+
+.resource-details > figure img {
+  width: 100%;
+  max-height: 420px;
+  border-radius: var(--radius-md);
+  background: var(--color-surface-soft);
+  object-fit: cover;
+}
+
+/* Info + booking form side by side on wide screens. */
+.resource-details > section {
+  margin-top: var(--space-6);
+}
+
+.resource-details dl {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-4);
+  margin: 0 0 var(--space-5);
+}
+
+.resource-details dl > div {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: var(--space-3) var(--space-4);
+  background: var(--color-surface);
+}
+
+.resource-details dl dt {
+  color: var(--color-muted);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.resource-details dl dd {
+  margin: 0;
+  color: var(--color-navy-950);
+  font-weight: 750;
+  overflow-wrap: anywhere;
+}
+
+/* The booking form section reads as its own card. */
+.resource-details section[aria-labelledby="booking-form-title"] {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-5);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-sm);
+}
+
+.resource-details section[aria-labelledby="booking-form-title"] h2 {
+  margin-bottom: var(--space-3);
+  font-size: 1.25rem;
+}
+
+/* --- auth forms (login / register) -------------------------------------- */
+
+.auth-section {
+  max-width: 480px;
+  margin-inline: auto;
+}
+
+.auth-section h1 {
+  margin-bottom: var(--space-4);
+  font-size: clamp(1.9rem, 4vw, 2.6rem);
+}
+
+.site-footer {
+  margin-top: var(--space-7);
+  padding: var(--space-7) max(1rem, calc((100vw - var(--container)) / 2));
+  background: var(--color-navy-950);
+  color: #ffffff;
+}
+
+.site-footer h2,
+.site-footer p,
+.site-footer a {
+  color: #ffffff;
+}
+
+.site-footer p {
+  color: #cbd3df;
+}
+
+.site-footer nav ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+  margin: var(--space-5) 0;
+  padding: 0;
+  list-style: none;
+}
+
+.site-footer a {
+  color: #e9edf4;
+  font-weight: 600;
+  transition: color 180ms ease;
+}
+
+.site-footer a:hover {
+  color: #ffffff;
+}
+
+@media (max-width: 1024px) {
+  .stats-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .steps-list {
+    grid-template-columns: 1fr;
+  }
+
+  .resource-details dl {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .how-it-works,
+  .campus-statistics {
+    padding-block: var(--space-6);
+  }
+
+  .cta-section {
+    margin-block: var(--space-6);
+    padding: var(--space-6) var(--space-4);
+  }
+}
+
+@media (max-width: 720px) {
+  main > section,
+  main > article {
+    width: min(100% - 1rem, var(--container));
+  }
+
+  .resource-categories,
+  .featured-resources {
+    padding-block: var(--space-6);
+  }
+
+  .resource-filters form {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Phones: stack the multi-column blocks and make every action a full-width,
+   easily tappable target. */
+@media (max-width: 620px) {
+  .stats-grid,
+  .resource-details dl {
+    grid-template-columns: 1fr;
+  }
+
+  /* Full-width buttons are far easier to hit than small inline ones. */
+  form button[type="submit"] {
+    width: 100%;
+  }
+
+  .site-footer {
+    padding: var(--space-6) var(--space-4);
+  }
+
+  /* Footer links stack into a comfortable tappable column. */
+  .site-footer nav ul {
+    flex-direction: column;
+    gap: var(--space-1);
+  }
+
+  .site-footer a {
+    display: inline-flex;
+    min-height: 2.5rem;
+    align-items: center;
+  }
+}
+
+@media (max-width: 400px) {
+  body {
+    font-size: 15.5px;
+  }
+
+  h1 {
+    font-size: clamp(1.85rem, 9vw, 2.4rem);
+  }
+
+  h2 {
+    font-size: clamp(1.4rem, 6vw, 1.8rem);
+  }
+
+  .cta-section {
+    padding: var(--space-5) var(--space-4);
+  }
+}

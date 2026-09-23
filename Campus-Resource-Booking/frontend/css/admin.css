@@ -1,0 +1,622 @@
+.admin-body main > section {
+  width: auto;
+  margin-inline: 0;
+}
+
+.admin-shell {
+  display: grid;
+  grid-template-columns: 260px minmax(0, 1fr);
+  align-items: start;
+  gap: var(--space-5);
+  width: min(100% - 2rem, 1500px);
+  margin: var(--space-5) auto var(--space-7);
+}
+
+/* ------------------------------------------------------------------ sidebar */
+
+.admin-sidebar {
+  position: sticky;
+  top: calc(4rem + var(--space-3));
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-sm);
+}
+
+.admin-sidebar__title {
+  margin: 0 0 var(--space-3);
+  padding-inline: var(--space-3);
+  color: var(--color-muted);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.admin-nav ul {
+  display: grid;
+  gap: var(--space-1);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.admin-nav__link {
+  display: flex;
+  width: 100%;
+  min-height: auto;
+  align-items: center;
+  gap: var(--space-3);
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  padding: 0.6rem 0.75rem;
+  background: transparent;
+  color: var(--color-navy-800);
+  font-weight: 700;
+  text-align: left;
+  transition:
+    background-color 160ms ease,
+    color 160ms ease,
+    border-color 160ms ease;
+}
+
+.admin-nav__link:hover {
+  background: var(--color-surface-soft);
+  box-shadow: none;
+  transform: none;
+}
+
+.admin-nav__link.is-active {
+  border-color: rgba(20, 125, 128, 0.32);
+  background: var(--color-accent-soft);
+  color: var(--color-accent-dark);
+}
+
+.admin-nav__icon {
+  width: 1.1rem;
+  flex: none;
+  text-align: center;
+  font-size: 0.95rem;
+  opacity: 0.85;
+}
+
+.admin-nav__badge {
+  margin-left: auto;
+  border-radius: 999px;
+  padding: 0.05rem 0.5rem;
+  background: var(--color-surface-soft);
+  color: var(--color-muted);
+  font-size: 0.75rem;
+  font-weight: 800;
+}
+
+.admin-nav__link.is-active .admin-nav__badge {
+  background: #ffffff;
+  color: var(--color-accent-dark);
+}
+
+.admin-sidebar__foot {
+  margin-top: var(--space-4);
+  border-top: 1px solid var(--color-border);
+  padding-top: var(--space-3);
+}
+
+.admin-nav__link--logout {
+  color: #9f2f2f;
+}
+
+.admin-nav__link--logout:hover {
+  background: #fdeeee;
+}
+
+/* ------------------------------------------------------------------ content */
+
+.admin-content {
+  min-width: 0;
+}
+
+.admin-topbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin-bottom: var(--space-4);
+}
+
+.admin-topbar h1 {
+  margin-bottom: var(--space-1);
+  font-size: clamp(1.5rem, 2.6vw, 2.1rem);
+}
+
+.admin-topbar p {
+  margin: 0;
+}
+
+.admin-topbar__user {
+  color: var(--color-muted);
+  font-size: 0.9rem;
+}
+
+.admin-topbar__user strong {
+  color: var(--color-navy-950);
+}
+
+/* Denied / loading gate ----------------------------------------------------- */
+
+.admin-denied {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-7) var(--space-5);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-sm);
+  text-align: center;
+}
+
+.admin-denied h1 {
+  margin-bottom: var(--space-3);
+  font-size: clamp(1.4rem, 2.4vw, 1.9rem);
+}
+
+.admin-denied p {
+  margin-bottom: var(--space-5);
+}
+
+.admin-denied .button {
+  margin-inline: auto;
+}
+
+/* Statistics ---------------------------------------------------------------- */
+
+.admin-stats {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--space-4);
+  margin-bottom: var(--space-5);
+}
+
+/* Panels -------------------------------------------------------------------- */
+
+.admin-panel {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  margin-bottom: var(--space-5);
+  padding: var(--space-5);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-sm);
+}
+
+.admin-panel__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin-bottom: var(--space-4);
+}
+
+.admin-panel__head h2 {
+  margin: 0;
+  font-size: 1.2rem;
+}
+
+.button--ghost {
+  min-height: auto;
+  border-color: var(--color-border);
+  padding: 0.45rem 0.8rem;
+  background: transparent;
+  color: var(--color-navy-900);
+  font-size: 0.85rem;
+}
+
+.button--ghost:hover {
+  border-color: var(--color-accent);
+  background: var(--color-accent-soft);
+  color: var(--color-accent-dark);
+}
+
+.button--small {
+  min-height: auto;
+  padding: 0.35rem 0.65rem;
+  font-size: 0.82rem;
+}
+
+/* On touch-sized screens, small controls grow to a comfortable tap target. */
+@media (max-width: 768px) {
+  .button--small,
+  .button--ghost,
+  .admin-status-select {
+    min-height: 2.75rem;
+    padding: 0.6rem 0.9rem;
+  }
+}
+
+.admin-note {
+  margin-top: calc(var(--space-4) * -1 + var(--space-1));
+  margin-bottom: var(--space-4);
+  font-size: 0.88rem;
+}
+
+/* Tables -------------------------------------------------------------------- */
+
+.admin-table-wrap {
+  overflow-x: auto;
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+.admin-table caption {
+  padding-bottom: var(--space-2);
+  color: var(--color-muted);
+  font-size: 0.85rem;
+  text-align: left;
+}
+
+.admin-table th,
+.admin-table td {
+  border-bottom: 1px solid var(--color-border);
+  padding: var(--space-3);
+  text-align: left;
+  vertical-align: middle;
+}
+
+.admin-table thead th {
+  color: var(--color-muted);
+  font-size: 0.74rem;
+  font-weight: 800;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.admin-table tbody tr:hover {
+  background: var(--color-surface-soft);
+}
+
+.admin-table td strong {
+  color: var(--color-navy-950);
+}
+
+.admin-table__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  white-space: nowrap;
+}
+
+/* Status pill --------------------------------------------------------------- */
+
+.status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  border-radius: 999px;
+  padding: 0.15rem 0.6rem;
+  background: var(--color-surface-soft);
+  color: var(--color-navy-800);
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.status-pill::before {
+  content: "";
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: 50%;
+  background: var(--color-muted);
+}
+
+.status-pill--confirmed::before {
+  background: #16845f;
+}
+
+.status-pill--pending::before {
+  background: #b7791f;
+}
+
+.status-pill--cancelled::before {
+  background: #a33b3b;
+}
+
+.status-pill--completed::before {
+  background: var(--color-accent);
+}
+
+.status-pill--available::before {
+  background: #16845f;
+}
+
+.status-pill--unavailable::before {
+  background: #a33b3b;
+}
+
+/* Inline status select ------------------------------------------------------ */
+
+.admin-status-select {
+  min-height: auto;
+  width: auto;
+  padding: 0.3rem 0.5rem;
+  font-size: 0.85rem;
+}
+
+/* Availability list (dashboard view) ---------------------------------------- */
+
+.admin-availability {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: var(--space-3);
+}
+
+.availability-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: var(--space-3);
+}
+
+.availability-row__name {
+  margin: 0;
+  color: var(--color-navy-950);
+  font-weight: 750;
+}
+
+.availability-row__meta {
+  margin: 0;
+  color: var(--color-muted);
+  font-size: 0.82rem;
+}
+
+/* Toggle switch ------------------------------------------------------------- */
+
+.switch {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  gap: var(--space-2);
+  cursor: pointer;
+}
+
+.switch input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+}
+
+.switch__track {
+  position: relative;
+  width: 2.6rem;
+  height: 1.45rem;
+  border-radius: 999px;
+  background: var(--color-border);
+  transition: background-color 180ms ease;
+}
+
+.switch__track::after {
+  content: "";
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 1.05rem;
+  height: 1.05rem;
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow: var(--shadow-sm);
+  transition: transform 180ms ease;
+}
+
+.switch input:checked + .switch__track {
+  background: var(--color-accent);
+}
+
+.switch input:checked + .switch__track::after {
+  transform: translateX(1.15rem);
+}
+
+.switch input:focus-visible + .switch__track {
+  outline: 3px solid rgba(20, 125, 128, 0.28);
+  outline-offset: 2px;
+}
+
+/* Forms --------------------------------------------------------------------- */
+
+.admin-form__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-4);
+}
+
+.admin-form__wide {
+  grid-column: 1 / -1;
+}
+
+.form-group--inline {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.form-group--inline input[type="checkbox"] {
+  width: auto;
+}
+
+.form-group--inline label {
+  margin: 0;
+}
+
+.admin-form__actions {
+  display: flex;
+  gap: var(--space-3);
+  margin-top: var(--space-4);
+}
+
+.admin-filters {
+  grid-template-columns: minmax(0, 1fr) 220px;
+  align-items: end;
+  margin-bottom: var(--space-4);
+}
+
+.admin-search {
+  width: auto;
+  min-width: 220px;
+  max-width: 320px;
+}
+
+/* Settings ------------------------------------------------------------------ */
+
+.admin-settings-list {
+  max-width: 520px;
+  margin-bottom: var(--space-5);
+}
+
+.admin-danger {
+  border: 1px solid #f0c9c9;
+  border-radius: var(--radius-sm);
+  padding: var(--space-4);
+  background: #fdf6f6;
+}
+
+.admin-danger h3 {
+  margin-bottom: var(--space-2);
+  color: #9f2f2f;
+}
+
+.admin-danger p {
+  font-size: 0.88rem;
+}
+
+/* ------------------------------------------------------------------ responsive */
+
+@media (max-width: 1100px) {
+  .admin-stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* Tablet: the sidebar collapses into a stacked block above the content and its
+   nav becomes a horizontally scrollable strip of chips. */
+@media (max-width: 900px) {
+  .admin-shell {
+    grid-template-columns: minmax(0, 1fr);
+    width: min(100% - 1rem, 1500px);
+  }
+
+  .admin-sidebar {
+    position: static;
+  }
+
+  .admin-nav ul {
+    grid-auto-flow: column;
+    grid-auto-columns: max-content;
+    overflow-x: auto;
+    padding-bottom: var(--space-1);
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+  }
+
+  .admin-nav__link {
+    white-space: nowrap;
+  }
+
+  .admin-nav__badge {
+    margin-left: var(--space-2);
+  }
+
+  .admin-sidebar__foot {
+    margin-top: var(--space-3);
+  }
+}
+
+/* Tables stay usable on phones: the wrapper scrolls horizontally and the first
+   column stays pinned so each row keeps its label in view. */
+@media (max-width: 768px) {
+  .admin-table {
+    font-size: 0.85rem;
+  }
+
+  .admin-table th,
+  .admin-table td {
+    padding: var(--space-2) var(--space-3);
+  }
+
+  .admin-table thead th:first-child,
+  .admin-table tbody td:first-child {
+    position: sticky;
+    left: 0;
+    z-index: 1;
+    background: var(--color-surface);
+    box-shadow: 1px 0 0 var(--color-border);
+  }
+
+  .admin-table tbody tr:hover td:first-child {
+    background: var(--color-surface-soft);
+  }
+}
+
+@media (max-width: 620px) {
+  .admin-stats,
+  .admin-form__grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .admin-filters {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .admin-search {
+    max-width: none;
+    width: 100%;
+    min-width: 0;
+  }
+
+  .admin-panel {
+    padding: var(--space-4);
+  }
+
+  .admin-panel__head {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  /* Full-width form actions are easier to tap than small inline buttons. */
+  .admin-form__actions .button {
+    width: 100%;
+  }
+
+  .admin-table-wrap {
+    /* Let the sticky-first-column table keep breathing at 375–390px. */
+    margin-inline: calc(var(--space-4) * -1);
+    padding-inline: var(--space-4);
+  }
+
+  .admin-topbar {
+    align-items: flex-start;
+  }
+}
+
+@media (max-width: 400px) {
+  .admin-table {
+    font-size: 0.8rem;
+  }
+
+  .admin-table th,
+  .admin-table td {
+    padding: var(--space-2);
+  }
+
+  .admin-availability {
+    grid-template-columns: 1fr;
+  }
+}

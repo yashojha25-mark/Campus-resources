@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>All Bookings | Campus Resource Booking</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/navbar.css" />
+    <link rel="stylesheet" href="css/cards.css" />
+    <link rel="stylesheet" href="css/dashboard.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <nav class="navbar" aria-label="Main navigation">
+        <a class="navbar__brand" href="index.html">Campus Resource Booking</a>
+        <button class="navbar__toggle" type="button" aria-label="Toggle navigation" aria-expanded="false">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+        <ul class="navbar__links">
+          <!-- Shown while logged out -->
+          <li data-auth="guest"><a href="resources.html">Resources</a></li>
+          <li data-auth="guest"><a href="login.html">Login</a></li>
+
+          <!-- Shown while logged in -->
+          <li data-auth="user" hidden><a href="dashboard.html">Dashboard</a></li>
+          <li data-auth="user" hidden><a href="resources.html">Resources</a></li>
+          <li data-auth="user" hidden><a href="my-bookings.html">All Bookings</a></li>
+          <li data-auth="user" data-auth-role="admin" hidden><a href="admin.html">Admin</a></li>
+          <li data-auth="user" hidden>
+            <span class="navbar__user" data-auth-user-name></span>
+          </li>
+          <li data-auth="user" hidden><button class="navbar__logout" type="button" id="logout-button">Logout</button></li>
+        </ul>
+      </nav>
+    </header>
+
+    <main>
+      <section class="page-header" aria-labelledby="my-bookings-title">
+        <h1 id="my-bookings-title">All Bookings</h1>
+        <p>
+          Every booking you have made, newest first. Use the filters to narrow the list, or see the
+          <a href="dashboard.html">dashboard</a> for a summary.
+        </p>
+      </section>
+
+      <section class="resource-filters" aria-labelledby="booking-filters-title">
+        <h2 id="booking-filters-title" class="visually-hidden">Filter bookings</h2>
+        <form id="booking-filters" role="search">
+          <label for="booking-search">Search</label>
+          <input
+            id="booking-search"
+            name="search"
+            type="search"
+            placeholder="Resource or location…"
+            autocomplete="off"
+          />
+          <label for="booking-status">Status</label>
+          <select id="booking-status" name="status">
+            <option value="">All statuses</option>
+            <option value="confirmed">Confirmed</option>
+            <option value="pending">Pending</option>
+            <option value="cancelled">Cancelled</option>
+            <option value="completed">Completed</option>
+          </select>
+        </form>
+      </section>
+
+      <section class="booking-list" aria-labelledby="booking-list-title">
+        <h2 id="booking-list-title" class="visually-hidden">Bookings</h2>
+        <!-- Success / loading / error feedback for list + cancel requests -->
+        <div id="bookings-message" class="message" aria-live="polite" hidden></div>
+        <div id="bookings-container" class="booking-grid"></div>
+      </section>
+    </main>
+
+    <script src="js/api.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/bookings.js"></script>
+    <script src="js/main.js"></script>
+  </body>
+</html>

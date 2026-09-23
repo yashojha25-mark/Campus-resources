@@ -1,0 +1,148 @@
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  border-bottom: 1px solid rgba(216, 222, 232, 0.9);
+  background: rgba(255, 255, 255, 0.94);
+  box-shadow: var(--shadow-sm);
+  backdrop-filter: blur(14px);
+}
+
+.navbar {
+  display: flex;
+  width: min(100% - 2rem, var(--container));
+  min-height: 4.25rem;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-5);
+  margin-inline: auto;
+}
+
+.navbar__brand {
+  color: var(--color-navy-950);
+  font-weight: 800;
+  letter-spacing: 0;
+  white-space: nowrap;
+}
+
+.navbar__toggle {
+  display: none;
+  width: 2.5rem;
+  min-height: 2.5rem;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 0.25rem;
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  padding: 0;
+}
+
+.navbar__toggle span {
+  width: 1.1rem;
+  height: 2px;
+  border-radius: 999px;
+  background: var(--color-navy-900);
+  transition:
+    opacity 180ms ease,
+    transform 180ms ease;
+}
+
+.navbar__toggle.is-open span:first-child {
+  transform: translateY(6px) rotate(45deg);
+}
+
+.navbar__toggle.is-open span:nth-child(2) {
+  opacity: 0;
+}
+
+.navbar__toggle.is-open span:last-child {
+  transform: translateY(-6px) rotate(-45deg);
+}
+
+.navbar__links {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.navbar__links a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.4rem;
+  border-radius: var(--radius-sm);
+  padding: 0.45rem 0.75rem;
+  color: var(--color-muted);
+  font-size: 0.95rem;
+  font-weight: 650;
+  transition:
+    background-color 180ms ease,
+    color 180ms ease;
+}
+
+.navbar__links a:hover {
+  background: var(--color-accent-soft);
+  color: var(--color-accent-dark);
+}
+
+@media (max-width: 780px) {
+  .navbar {
+    width: min(100% - 1rem, var(--container));
+    min-height: auto;
+    align-items: center;
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding-block: var(--space-3);
+  }
+
+  .navbar__toggle {
+    display: inline-flex;
+  }
+
+  .navbar__links {
+    display: none;
+    width: 100%;
+    align-items: stretch;
+    flex-direction: column;
+    gap: var(--space-2);
+    border-top: 1px solid var(--color-border);
+    padding-top: var(--space-3);
+  }
+
+  .navbar__links.is-open {
+    display: flex;
+  }
+
+  /* Each row is a full-width, comfortably tappable target (>= 44px). */
+  .navbar__links a {
+    width: 100%;
+    min-height: 2.75rem;
+    padding-inline: var(--space-3);
+  }
+
+  /* Session controls (name + logout) stack with the links. */
+  .navbar__links li {
+    width: 100%;
+  }
+
+  .navbar__logout {
+    width: 100%;
+    min-height: 2.75rem;
+    justify-content: flex-start;
+  }
+}
+
+/* Very narrow phones: shrink the brand so it never fights the toggle. */
+@media (max-width: 400px) {
+  .navbar {
+    gap: var(--space-2);
+    padding-block: var(--space-2);
+  }
+
+  .navbar__brand {
+    font-size: 0.95rem;
+  }
+}

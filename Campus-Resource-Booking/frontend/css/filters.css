@@ -1,0 +1,174 @@
+/* filters.css — resource discovery: search, category, location, capacity,
+   availability, plus the active-filter chips.
+
+   Layout: the <form> is a grid (see style.css) of .filter-field wrappers. Each
+   field stacks its own label above its control so the columns align at any
+   label length. */
+
+/* Each field is a two-row stack: label, then control. min-height on the label
+   row keeps every control on the same baseline even when one label wraps. */
+.filter-field {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  gap: var(--space-1);
+  min-width: 0;
+}
+
+.filter-field label {
+  align-self: end;
+  min-height: 1.15rem;
+  line-height: 1.15rem;
+}
+
+.filter-field label {
+  color: var(--color-muted);
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.filter-field input,
+.filter-field select {
+  min-height: 2.75rem;
+}
+
+.filter-actions {
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  /* Match the height of a .filter-field (label + control) so the button's
+     baseline lines up with the inputs beside it. */
+  min-height: calc(1.15rem + var(--space-1) + 2.75rem);
+}
+
+.filter-actions .button {
+  width: 100%;
+}
+
+/* --- active filter chips --------------------------------------------------- */
+
+.active-filters {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+  margin-top: var(--space-3);
+}
+
+.active-filters__label {
+  margin: 0;
+  color: var(--color-muted);
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.filter-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  border: 1px solid rgba(20, 125, 128, 0.35);
+  border-radius: 999px;
+  padding: 0.2rem 0.35rem 0.2rem 0.7rem;
+  background: var(--color-accent-soft);
+  color: var(--color-accent-dark);
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.filter-chip__remove {
+  display: inline-flex;
+  width: 1.25rem;
+  min-height: 1.25rem;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 50%;
+  padding: 0;
+  background: transparent;
+  color: inherit;
+  font-size: 0.9rem;
+  line-height: 1;
+}
+
+.filter-chip__remove:hover {
+  background: rgba(15, 98, 100, 0.18);
+  transform: none;
+  box-shadow: none;
+}
+
+/* --- results header -------------------------------------------------------- */
+
+.results-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-2);
+  margin-bottom: var(--space-4);
+}
+
+.results-bar h2 {
+  margin: 0;
+  font-size: 1.2rem;
+}
+
+/* Screen-reader-only status for the live result count. */
+.results-status {
+  color: var(--color-muted);
+  font-size: 0.88rem;
+  font-weight: 650;
+}
+
+/* --- searching indicator --------------------------------------------------- */
+
+/* Shown while the debounced search settles, so the list never feels frozen. */
+.resource-grid[data-searching="true"] {
+  opacity: 0.55;
+  transition: opacity 120ms ease;
+}
+
+/* --- clear-all link inside an empty state ---------------------------------- */
+
+.filter-reset-inline {
+  margin-top: var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: 0.5rem 0.9rem;
+  background: var(--color-surface);
+  color: var(--color-navy-900);
+  font-weight: 700;
+}
+
+.filter-reset-inline:hover {
+  border-color: var(--color-accent);
+  background: var(--color-accent-soft);
+  color: var(--color-accent-dark);
+}
+
+@media (max-width: 768px) {
+  .filter-actions .button {
+    width: auto;
+  }
+
+  .filter-actions {
+    justify-content: flex-start;
+  }
+}
+
+/* Phones: one filter per row, and the clear button becomes full-width. */
+@media (max-width: 620px) {
+  .filter-field label {
+    white-space: normal;
+  }
+
+  .filter-actions {
+    min-height: 0;
+  }
+
+  .filter-actions .button {
+    width: 100%;
+    min-height: 2.75rem;
+  }
+}

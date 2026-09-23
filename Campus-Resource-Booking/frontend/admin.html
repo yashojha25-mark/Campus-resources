@@ -1,0 +1,316 @@
+<!doctype html>
+<html lang="en">
+ <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Administrator dashboard for managing campus resources and bookings." />
+    <title>Admin Dashboard | Campus Resource Booking</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/navbar.css" />
+    <link rel="stylesheet" href="css/cards.css" />
+    <link rel="stylesheet" href="css/dashboard.css" />
+    <link rel="stylesheet" href="css/admin.css" />
+ </head>
+ <body class="admin-body">
+    <header class="site-header">
+      <nav class="navbar" aria-label="Main navigation">
+        <a class="navbar__brand" href="index.html">Campus Resource Booking</a>
+        <button class="navbar__toggle" type="button" aria-label="Toggle navigation" aria-expanded="false">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+        <ul class="navbar__links">
+          <!-- Shown while logged out -->
+          <li data-auth="guest"><a href="resources.html">Resources</a></li>
+          <li data-auth="guest"><a href="login.html">Login</a></li>
+
+          <!-- Shown while logged in -->
+          <li data-auth="user" hidden><a href="dashboard.html">Dashboard</a></li>
+          <li data-auth="user" hidden><a href="resources.html">Resources</a></li>
+          <li data-auth="user" hidden><a href="my-bookings.html">All Bookings</a></li>
+          <li data-auth="user" data-auth-role="admin" hidden><a href="admin.html" aria-current="page">Admin</a></li>
+          <li data-auth="user" hidden>
+            <span class="navbar__user" data-auth-user-name></span>
+          </li>
+          <li data-auth="user" hidden><button class="navbar__logout" type="button" id="logout-button">Logout</button></li>
+        </ul>
+      </nav>
+    </header>
+
+    <div class="admin-shell">
+      <!-- ------------------------------------------------------------ sidebar -->
+      <aside class="admin-sidebar" aria-label="Admin sections">
+        <p class="admin-sidebar__title">Administration</p>
+
+        <nav class="admin-nav">
+          <ul>
+            <li>
+              <button type="button" class="admin-nav__link is-active" data-admin-view="dashboard" aria-current="page">
+                <span class="admin-nav__icon" aria-hidden="true">▦</span> Dashboard
+              </button>
+            </li>
+            <li>
+              <button type="button" class="admin-nav__link" data-admin-view="resources">
+                <span class="admin-nav__icon" aria-hidden="true">▤</span> Resources
+                <span class="admin-nav__badge" id="nav-count-resources">—</span>
+              </button>
+            </li>
+            <li>
+              <button type="button" class="admin-nav__link" data-admin-view="bookings">
+                <span class="admin-nav__icon" aria-hidden="true">▥</span> Bookings
+                <span class="admin-nav__badge" id="nav-count-bookings">—</span>
+              </button>
+            </li>
+            <li>
+              <button type="button" class="admin-nav__link" data-admin-view="students">
+                <span class="admin-nav__icon" aria-hidden="true">☺</span> Students
+                <span class="admin-nav__badge" id="nav-count-students">—</span>
+              </button>
+            </li>
+            <li>
+              <button type="button" class="admin-nav__link" data-admin-view="settings">
+                <span class="admin-nav__icon" aria-hidden="true">⚙</span> Settings
+              </button>
+            </li>
+          </ul>
+        </nav>
+
+        <div class="admin-sidebar__foot">
+          <button type="button" class="admin-nav__link admin-nav__link--logout" id="admin-logout">
+            <span class="admin-nav__icon" aria-hidden="true">⎋</span> Logout
+          </button>
+        </div>
+      </aside>
+
+      <!-- ------------------------------------------------------------- content -->
+      <main class="admin-content">
+        <!-- Required: only the guard failure state is ever shown to a non-admin -->
+        <div id="admin-denied" class="admin-denied" hidden>
+          <h1>Administrator access required</h1>
+          <p id="admin-denied-reason">
+            This area is restricted to administrator accounts.
+          </p>
+          <a class="button button--primary" href="index.html">Back to home</a>
+        </div>
+
+        <div id="admin-app" hidden>
+          <div class="admin-topbar">
+            <div>
+              <h1 id="admin-view-title">Dashboard</h1>
+              <p id="admin-view-subtitle">Overview of campus resources and bookings.</p>
+            </div>
+            <p class="admin-topbar__user">
+              Signed in as <strong id="admin-user-name">—</strong>
+            </p>
+          </div>
+
+          <!-- Global feedback for every request on this page -->
+          <div id="admin-message" class="message" aria-live="polite" hidden></div>
+
+          <!-- ================================================== VIEW: DASHBOARD -->
+          <section class="admin-view" data-admin-panel="dashboard">
+            <section class="admin-stats" aria-label="Key statistics">
+              <article class="stat-card">
+                <p class="stat-card__label">Total Resources</p>
+                <p class="stat-card__value" id="stat-total-resources">—</p>
+              </article>
+              <article class="stat-card">
+                <p class="stat-card__label">Available Resources</p>
+                <p class="stat-card__value" id="stat-available-resources">—</p>
+              </article>
+              <article class="stat-card">
+                <p class="stat-card__label">Total Bookings</p>
+                <p class="stat-card__value" id="stat-total-bookings">—</p>
+              </article>
+              <article class="stat-card">
+                <p class="stat-card__label">Active Bookings</p>
+                <p class="stat-card__value" id="stat-active-bookings">—</p>
+              </article>
+            </section>
+
+            <section class="admin-panel" aria-labelledby="recent-bookings-title">
+              <div class="admin-panel__head">
+                <h2 id="recent-bookings-title">Recent Bookings</h2>
+                <button type="button" class="button button--ghost" data-admin-view="bookings">
+                  View all
+                </button>
+              </div>
+              <div id="admin-recent-bookings" class="admin-table-wrap"></div>
+            </section>
+
+            <section class="admin-panel" aria-labelledby="availability-title">
+              <div class="admin-panel__head">
+                <h2 id="availability-title">Resource Availability</h2>
+                <button type="button" class="button button--ghost" data-admin-view="resources">
+                  Manage resources
+                </button>
+              </div>
+              <div id="admin-availability-list" class="admin-availability"></div>
+            </section>
+          </section>
+
+          <!-- ================================================== VIEW: RESOURCES -->
+          <section class="admin-view" data-admin-panel="resources" hidden>
+            <section class="admin-panel" aria-labelledby="resource-form-title">
+              <div class="admin-panel__head">
+                <h2 id="resource-form-title">Add Resource</h2>
+                <button type="button" class="button button--ghost" id="resource-form-reset" hidden>
+                  Cancel edit
+                </button>
+              </div>
+
+              <form id="resource-form" class="admin-form">
+                <input type="hidden" id="resource-id" name="id" />
+
+                <div class="admin-form__grid">
+                  <div class="form-group">
+                    <label for="resource-name">Name</label>
+                    <input id="resource-name" name="name" type="text" required />
+                  </div>
+                  <div class="form-group">
+                    <label for="resource-location">Location</label>
+                    <input id="resource-location" name="location" type="text" required />
+                  </div>
+                  <div class="form-group">
+                    <label for="resource-capacity">Capacity</label>
+                    <input id="resource-capacity" name="capacity" type="number" min="1" required />
+                  </div>
+                  <div class="form-group">
+                    <label for="resource-category">Category</label>
+                    <input id="resource-category" name="category" type="text" list="resource-categories" required />
+                    <datalist id="resource-categories"></datalist>
+                  </div>
+                  <div class="form-group admin-form__wide">
+                    <label for="resource-image">Image URL</label>
+                    <input id="resource-image" name="image" type="url" placeholder="https://…" />
+                  </div>
+                  <div class="form-group admin-form__wide">
+                    <label for="resource-description">Description</label>
+                    <textarea id="resource-description" name="description" rows="3"></textarea>
+                  </div>
+                  <div class="form-group form-group--inline admin-form__wide">
+                    <input id="resource-available" name="available" type="checkbox" checked />
+                    <label for="resource-available">Available for booking</label>
+                  </div>
+                </div>
+
+                <div class="admin-form__actions">
+                  <button type="submit" id="resource-submit">Add Resource</button>
+                </div>
+              </form>
+            </section>
+
+            <section class="admin-panel" aria-labelledby="resource-list-title">
+              <div class="admin-panel__head">
+                <h2 id="resource-list-title">All Resources</h2>
+                <input
+                  id="resource-filter"
+                  class="admin-search"
+                  type="search"
+                  placeholder="Search resources…"
+                  aria-label="Search resources"
+                />
+              </div>
+              <div id="admin-resources-container" class="admin-table-wrap"></div>
+            </section>
+          </section>
+
+          <!-- =================================================== VIEW: BOOKINGS -->
+          <section class="admin-view" data-admin-panel="bookings" hidden>
+            <section class="admin-panel" aria-labelledby="admin-bookings-title">
+              <div class="admin-panel__head">
+                <h2 id="admin-bookings-title">All Bookings</h2>
+              </div>
+
+              <form class="admin-filters" id="admin-booking-filters" role="search">
+                <div class="form-group">
+                  <label for="admin-booking-search">Search</label>
+                  <input
+                    id="admin-booking-search"
+                    name="search"
+                    type="search"
+                    placeholder="Student or resource…"
+                    autocomplete="off"
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="admin-booking-status">Status</label>
+                  <select id="admin-booking-status" name="status">
+                    <option value="">All statuses</option>
+                    <option value="pending">Pending</option>
+                    <option value="confirmed">Confirmed</option>
+                    <option value="cancelled">Cancelled</option>
+                    <option value="completed">Completed</option>
+                  </select>
+                </div>
+              </form>
+
+              <div id="admin-bookings-container" class="admin-table-wrap"></div>
+            </section>
+          </section>
+
+          <!-- =================================================== VIEW: STUDENTS -->
+          <section class="admin-view" data-admin-panel="students" hidden>
+            <section class="admin-panel" aria-labelledby="students-title">
+              <div class="admin-panel__head">
+                <h2 id="students-title">Students</h2>
+              </div>
+              <p class="admin-note" id="students-note">
+                Students who have made at least one booking. Derived from the bookings list —
+                the API has no dedicated users endpoint.
+              </p>
+              <div id="admin-students-container" class="admin-table-wrap"></div>
+            </section>
+          </section>
+
+          <!-- =================================================== VIEW: SETTINGS -->
+          <section class="admin-view" data-admin-panel="settings" hidden>
+            <section class="admin-panel" aria-labelledby="settings-title">
+              <div class="admin-panel__head">
+                <h2 id="settings-title">Settings</h2>
+              </div>
+
+              <dl class="profile-list admin-settings-list">
+                <div>
+                  <dt>Signed in as</dt>
+                  <dd id="settings-name">—</dd>
+                </div>
+                <div>
+                  <dt>Email</dt>
+                  <dd id="settings-email">—</dd>
+                </div>
+                <div>
+                  <dt>Role</dt>
+                  <dd id="settings-role">—</dd>
+                </div>
+                <div>
+                  <dt>API base URL</dt>
+                  <dd id="settings-api-base">—</dd>
+                </div>
+              </dl>
+
+              <div class="admin-danger">
+                <h3>Danger zone</h3>
+                <p>
+                  Deleting a resource cannot be undone. Bookings that reference a deleted resource
+                  are kept but show as "Resource no longer available".
+                </p>
+                <button type="button" class="button button--danger" id="settings-refresh">
+                  Reload all data
+                </button>
+              </div>
+            </section>
+          </section>
+        </div>
+      </main>
+    </div>
+
+    <script src="js/api.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/admin.js"></script>
+    <script src="js/main.js"></script>
+ </body>
+</html>
+

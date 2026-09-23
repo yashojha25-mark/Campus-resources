@@ -1,0 +1,266 @@
+.hero {
+  position: relative;
+  width: 100%;
+  max-width: none;
+  min-height: 80vh;
+  margin-inline: 0;
+  overflow: hidden;
+  background: var(--color-navy-950);
+}
+
+.hero__slideshow {
+  position: absolute;
+  inset: 0;
+}
+
+.hero__slide {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  min-height: 80vh;
+  background-position: center;
+  background-size: cover;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 700ms ease;
+}
+
+.hero__slide.is-active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.hero__overlay {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, rgba(16, 24, 38, 0.9), rgba(16, 24, 38, 0.6) 48%, rgba(16, 24, 38, 0.22)),
+    rgba(16, 24, 38, 0.24);
+}
+
+.hero__content {
+  position: relative;
+  z-index: 2;
+  width: min(100% - 2rem, var(--container));
+  margin-inline: auto;
+  padding-block: clamp(4rem, 8vw, 7rem);
+}
+
+.hero__eyebrow {
+  display: inline-flex;
+  margin-bottom: var(--space-3);
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  border-radius: var(--radius-sm);
+  padding: 0.35rem 0.65rem;
+  background: rgba(255, 255, 255, 0.12);
+  color: #d7f2f2;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.hero__content h1,
+.hero__content h2 {
+  max-width: 760px;
+  margin-bottom: var(--space-4);
+  color: #ffffff;
+  font-size: clamp(2.5rem, 5vw, 4.75rem);
+  line-height: 1.05;
+}
+
+.hero__content p:not(.hero__eyebrow) {
+  max-width: 620px;
+  margin-bottom: var(--space-5);
+  color: #d6dde8;
+  font-size: clamp(1rem, 1.6vw, 1.18rem);
+}
+
+.hero__control {
+  position: absolute;
+  top: 50%;
+  z-index: 3;
+  width: 2.75rem;
+  min-height: 2.75rem;
+  padding: 0;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  background: rgba(16, 24, 38, 0.48);
+  color: #ffffff;
+  transform: translateY(-50%);
+}
+
+.hero__control:hover {
+  background: rgba(20, 125, 128, 0.85);
+  transform: translateY(-50%);
+}
+
+.hero__control span {
+  font-size: 2rem;
+  line-height: 1;
+}
+
+.hero__control--prev {
+  left: max(1rem, calc((100vw - var(--container)) / 2));
+}
+
+.hero__control--next {
+  right: max(1rem, calc((100vw - var(--container)) / 2));
+}
+
+.hero__indicators {
+  position: absolute;
+  right: max(1rem, calc((100vw - var(--container)) / 2));
+  bottom: var(--space-5);
+  z-index: 3;
+  display: flex;
+  gap: var(--space-2);
+}
+
+/* Each dot is a real button with a ~44px touch target; the visible bar is
+   drawn by ::before so the hit area can be much taller than the bar itself. */
+.hero__indicators button {
+  position: relative;
+  width: 2rem;
+  min-height: 2.75rem;
+  border: 0;
+  border-radius: 999px;
+  padding: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.hero__indicators button::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  height: 0.35rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.42);
+  transform: translateY(-50%);
+  transition:
+    background-color 180ms ease,
+    width 180ms ease;
+}
+
+.hero__indicators button:hover,
+.hero__indicators button.is-active {
+  width: 2.8rem;
+  background: transparent;
+  transform: none;
+}
+
+.hero__indicators button:hover::before,
+.hero__indicators button.is-active::before {
+  background: #ffffff;
+}
+
+@media (max-width: 820px) {
+  .hero,
+  .hero__slide {
+    min-height: 72vh;
+  }
+
+  .hero__overlay {
+    background:
+      linear-gradient(0deg, rgba(16, 24, 38, 0.9), rgba(16, 24, 38, 0.48)),
+      rgba(16, 24, 38, 0.18);
+  }
+
+  .hero__content {
+    width: min(100% - 1rem, var(--container));
+    padding-inline: 2.75rem;
+  }
+
+  .hero__content h1,
+  .hero__content h2 {
+    font-size: clamp(2rem, 6vw, 3.25rem);
+  }
+
+  .hero__control {
+    width: 2.5rem;
+    min-height: 2.5rem;
+  }
+}
+
+/* Tablets: a little more vertical breathing room for the floating text. */
+@media (max-width: 768px) {
+  .hero__content {
+    padding-block: clamp(3rem, 9vw, 5rem);
+  }
+
+  .hero__content p:not(.hero__eyebrow) {
+    font-size: 1rem;
+  }
+}
+
+/* Phones: the floating hero text scales down and the controls move out of the
+   text column to the bottom of the slide. */
+@media (max-width: 560px) {
+  .hero,
+  .hero__slide {
+    min-height: 68vh;
+  }
+
+  .hero__content {
+    padding-inline: 0;
+    padding-block: clamp(2.5rem, 10vw, 4rem);
+  }
+
+  .hero__eyebrow {
+    font-size: 0.7rem;
+  }
+
+  .hero__content h1,
+  .hero__content h2 {
+    font-size: clamp(1.75rem, 8vw, 2.6rem);
+    line-height: 1.1;
+  }
+
+  .hero__content p:not(.hero__eyebrow) {
+    margin-bottom: var(--space-4);
+    font-size: 0.95rem;
+  }
+
+  /* The CTA spans the column so it is an easy tap target. */
+  .hero__content .button {
+    width: 100%;
+  }
+
+  .hero__control {
+    top: auto;
+    bottom: calc(var(--space-5) + 2.5rem);
+    width: 2.75rem;
+    min-height: 2.75rem;
+    transform: none;
+  }
+
+  .hero__control--prev {
+    left: var(--space-4);
+  }
+
+  .hero__control--next {
+    right: var(--space-4);
+  }
+
+  .hero__control:hover {
+    transform: none;
+  }
+
+  .hero__indicators {
+    left: 50%;
+    right: auto;
+    bottom: var(--space-4);
+    transform: translateX(-50%);
+  }
+}
+
+/* Very small phones: keep the hero from feeling cramped. */
+@media (max-width: 400px) {
+  .hero__content h1,
+  .hero__content h2 {
+    font-size: clamp(1.6rem, 8.5vw, 2.2rem);
+  }
+}

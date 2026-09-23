@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Resource Details | Campus Resource Booking</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/navbar.css" />
+       <link rel="stylesheet" href="css/cards.css" />
+       <link rel="stylesheet" href="css/booking-modal.css" />
+    </head>
+    <body>
+       <header class="site-header">
+      <nav class="navbar" aria-label="Main navigation">
+        <a class="navbar__brand" href="index.html">Campus Resource Booking</a>
+        <button class="navbar__toggle" type="button" aria-label="Toggle navigation" aria-expanded="false">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+        <ul class="navbar__links">
+          <!-- Shown while logged out -->
+          <li data-auth="guest"><a href="resources.html">Resources</a></li>
+          <li data-auth="guest"><a href="login.html">Login</a></li>
+
+          <!-- Shown while logged in -->
+          <li data-auth="user" hidden><a href="dashboard.html">Dashboard</a></li>
+          <li data-auth="user" hidden><a href="resources.html">Resources</a></li>
+          <li data-auth="user" hidden><a href="my-bookings.html">All Bookings</a></li>
+          <li data-auth="user" data-auth-role="admin" hidden><a href="admin.html">Admin</a></li>
+          <li data-auth="user" hidden>
+            <span class="navbar__user" data-auth-user-name></span>
+          </li>
+          <li data-auth="user" hidden><button class="navbar__logout" type="button" id="logout-button">Logout</button></li>
+        </ul>
+      </nav>
+    </header>
+
+    <main>
+      <article class="resource-details" aria-labelledby="resource-details-title">
+        <header>
+          <h1 id="resource-details-title">Resource Details</h1>
+          <p id="resource-location">Location will appear here.</p>
+        </header>
+
+        <figure>
+          <!-- js/resources.js sets src (inline SVG placeholder or the API image URL)
+               and reveals the element once the resource has loaded. -->
+          <img id="resource-image" alt="Selected campus resource" hidden />
+        </figure>
+
+        <section aria-labelledby="resource-info-title">
+          <h2 id="resource-info-title">Information</h2>
+          <dl>
+            <div>
+              <dt>Category</dt>
+              <dd id="resource-category">Category</dd>
+            </div>
+            <div>
+              <dt>Capacity</dt>
+              <dd id="resource-capacity">Capacity</dd>
+            </div>
+            <div>
+              <dt>Availability</dt>
+              <dd id="resource-availability">Availability</dd>
+            </div>
+          </dl>
+          <p id="resource-description">Resource description will appear here.</p>
+        </section>
+
+        <section aria-labelledby="booking-form-title">
+          <h2 id="booking-form-title">Book This Resource</h2>
+          <div id="booking-message" class="message" aria-live="polite"></div>
+          <p class="booking-cta__hint">
+            Pick a date and time in the booking window. We will check the slot is free before you
+            confirm.
+          </p>
+          <button type="button" class="button button--primary" id="open-booking-modal">
+            Book Resource
+          </button>
+        </section>
+      </article>
+    </main>
+
+    <!-- ============================== Booking modal ==============================
+         Progressive disclosure: the trigger is a normal button, the dialog is a
+         native <dialog> so focus trapping, Esc-to-close and the backdrop come
+         from the platform rather than hand-rolled JS. -->
+    <dialog id="booking-modal" class="modal" aria-labelledby="booking-modal-title">
+      <div class="modal__panel">
+        <header class="modal__head">
+          <div>
+            <p class="modal__eyebrow">New Booking</p>
+            <h2 id="booking-modal-title">Book a Resource</h2>
+          </div>
+          <button type="button" class="modal__close" id="booking-modal-close" aria-label="Close booking window">
+            <span aria-hidden="true">✕</span>
+          </button>
+        </header>
+
+        <div class="modal__body">
+          <!-- Resource summary, filled from the resource already on the page -->
+          <section class="booking-summary" aria-label="Resource being booked">
+            <img id="modal-resource-image" src="" alt="" />
+            <div class="booking-summary__text">
+              <h3 id="modal-resource-name">Resource</h3>
+              <dl class="booking-summary__meta">
+                <div>
+                  <dt>Location</dt>
+                  <dd id="modal-resource-location">—</dd>
+                </div>
+                <div>
+                  <dt>Capacity</dt>
+                  <dd id="modal-resource-capacity">—</dd>
+                </div>
+              </dl>
+            </div>
+          </section>
+
+          <!-- Step 1: choose a slot and check it -->
+          <section class="booking-step" id="booking-step-slot" aria-labelledby="booking-slot-title">
+            <h3 id="booking-slot-title" class="booking-step__title">1. Choose date and time</h3>
+            <div class="booking-slot__grid">
+              <div class="form-group">
+                <label for="booking-date">Date</label>
+                <input id="booking-date" name="date" type="date" required />
+              </div>
+              <div class="form-group">
+                <label for="booking-start-time">Start Time</label>
+                <input id="booking-start-time" name="startTime" type="time" required />
+              </div>
+              <div class="form-group">
+                <label for="booking-end-time">End Time</label>
+                <input id="booking-end-time" name="endTime" type="time" required />
+              </div>
+            </div>
+
+            <button type="button" class="button button--primary" id="check-availability">
+              Check Availability
+            </button>
+          </section>
+
+          <!-- Result of the availability check: available / unavailable / error -->
+          <div id="availability-result" class="availability-result" hidden aria-live="polite">
+            <p class="availability-result__headline" id="availability-headline"></p>
+            <p class="availability-result__detail" id="availability-detail"></p>
+          </div>
+
+          <!-- Step 2: confirm (revealed only when the slot is available) -->
+          <section class="booking-step" id="booking-step-confirm" aria-labelledby="booking-confirm-title" hidden>
+            <h3 id="booking-confirm-title" class="booking-step__title">2. Confirm your booking</h3>
+            <p class="booking-confirm__summary" id="booking-confirm-summary"></p>
+            <div class="booking-step__actions">
+              <button type="button" class="button" id="booking-back">Change time</button>
+              <button type="button" class="button button--primary" id="confirm-booking">
+                Confirm Booking
+              </button>
+            </div>
+          </section>
+
+          <!-- Step 3: success receipt -->
+          <section class="booking-success" id="booking-success" hidden tabindex="-1" aria-labelledby="booking-success-title">
+            <p class="booking-success__icon" aria-hidden="true">✓</p>
+            <h3 id="booking-success-title">Booking confirmed</h3>
+            <p id="booking-success-message">Your booking has been created.</p>
+
+            <dl class="booking-receipt">
+              <div>
+                <dt>Booking ID</dt>
+                <dd id="receipt-id" class="booking-receipt__id">—</dd>
+              </div>
+              <div>
+                <dt>Resource</dt>
+                <dd id="receipt-resource">—</dd>
+              </div>
+              <div>
+                <dt>Date</dt>
+                <dd id="receipt-date">—</dd>
+              </div>
+              <div>
+                <dt>Time</dt>
+                <dd id="receipt-time">—</dd>
+              </div>
+              <div>
+                <dt>Status</dt>
+                <dd id="receipt-status">—</dd>
+              </div>
+            </dl>
+
+            <div class="booking-step__actions">
+              <button type="button" class="button" id="booking-done">Close</button>
+              <a class="button button--primary" href="my-bookings.html" id="view-my-bookings">
+                View My Bookings
+              </a>
+            </div>
+          </section>
+        </div>
+      </div>
+    </dialog>
+
+    <script src="js/api.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/resources.js"></script>
+    <script src="js/bookings.js"></script>
+    <script src="js/main.js"></script>
+  </body>
+</html>

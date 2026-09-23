@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Campus Resource Booking System for reserving classrooms, labs, halls, sports areas, and study spaces."
+    />
+    <title>Campus Resource Booking</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/navbar.css" />
+    <link rel="stylesheet" href="css/hero.css" />
+    <link rel="stylesheet" href="css/cards.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <nav class="navbar" aria-label="Main navigation">
+        <a class="navbar__brand" href="index.html">Campus Resource Booking</a>
+        <button class="navbar__toggle" type="button" aria-label="Toggle navigation" aria-expanded="false">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+        <ul class="navbar__links">
+          <!-- Shown while logged out -->
+          <li data-auth="guest"><a href="resources.html">Resources</a></li>
+          <li data-auth="guest"><a href="login.html">Login</a></li>
+          <li data-auth="guest"><a href="register.html">Register</a></li>
+
+          <!-- Shown while logged in (admin link is admin-only) -->
+          <li data-auth="user" hidden><a href="dashboard.html">Dashboard</a></li>
+          <li data-auth="user" hidden><a href="resources.html">Resources</a></li>
+          <li data-auth="user" hidden><a href="my-bookings.html">All Bookings</a></li>
+          <li data-auth="user" data-auth-role="admin" hidden><a href="admin.html">Admin</a></li>
+          <li data-auth="user" hidden>
+            <span class="navbar__user" data-auth-user-name></span>
+          </li>
+          <li data-auth="user" hidden><button class="navbar__logout" type="button" id="logout-button">Logout</button></li>
+        </ul>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="hero__slideshow" aria-label="Campus resource highlights">
+          <article
+            class="hero__slide is-active"
+            style="
+              background-image: url('https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=1800&q=80');
+            "
+          >
+            <div class="hero__overlay"></div>
+            <div class="hero__content">
+              <p class="hero__eyebrow">Campus Resources</p>
+              <h1 id="hero-title">Book Your Campus Space</h1>
+              <p>Reserve classrooms, labs, and shared facilities easily and quickly.</p>
+              <a class="button button--primary" href="resources.html">Explore Resources</a>
+            </div>
+          </article>
+
+          <article
+            class="hero__slide"
+            style="
+              background-image: url('https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=1800&q=80');
+            "
+          >
+            <div class="hero__overlay"></div>
+            <div class="hero__content">
+              <p class="hero__eyebrow">Computer Labs</p>
+              <h2>Reserve Technology Spaces</h2>
+              <p>Find computer labs and technical rooms for workshops, projects, and training.</p>
+              <a class="button button--primary" href="resources.html">View Labs</a>
+            </div>
+          </article>
+
+          <article
+            class="hero__slide"
+            style="
+              background-image: url('https://images.unsplash.com/photo-1523580846011-d3a5bc25702b?auto=format&fit=crop&w=1800&q=80');
+            "
+          >
+            <div class="hero__overlay"></div>
+            <div class="hero__content">
+              <p class="hero__eyebrow">Study Areas</p>
+              <h2>Plan Focused Study Sessions</h2>
+              <p>Book quiet rooms and collaborative areas for academic work across campus.</p>
+              <a class="button button--primary" href="resources.html">Find Study Rooms</a>
+            </div>
+          </article>
+
+          <article
+            class="hero__slide"
+            style="
+              background-image: url('https://images.unsplash.com/photo-1517457373958-b7bdd4587205?auto=format&fit=crop&w=1800&q=80');
+            "
+          >
+            <div class="hero__overlay"></div>
+            <div class="hero__content">
+              <p class="hero__eyebrow">Events And Halls</p>
+              <h2>Manage Events With Confidence</h2>
+              <p>Check capacity, location, and availability before reserving event spaces.</p>
+              <a class="button button--primary" href="resources.html">Browse Halls</a>
+            </div>
+          </article>
+        </div>
+
+        <button class="hero__control hero__control--prev" type="button" aria-label="Previous slide">
+          <span aria-hidden="true">&lsaquo;</span>
+        </button>
+        <button class="hero__control hero__control--next" type="button" aria-label="Next slide">
+          <span aria-hidden="true">&rsaquo;</span>
+        </button>
+
+        <div class="hero__indicators" aria-label="Hero slide indicators">
+          <button class="is-active" type="button" aria-label="Show slide 1" aria-current="true"></button>
+          <button type="button" aria-label="Show slide 2"></button>
+          <button type="button" aria-label="Show slide 3"></button>
+          <button type="button" aria-label="Show slide 4"></button>
+        </div>
+      </section>
+
+      <section class="resource-categories" aria-labelledby="categories-title">
+        <div class="section-heading">
+          <p>Explore by type</p>
+          <h2 id="categories-title">Resource Categories</h2>
+        </div>
+        <div class="category-grid">
+          <article class="category-card">
+            <h3>Auditoriums</h3>
+            <p>Large spaces for seminars, orientations, and cultural events.</p>
+          </article>
+          <article class="category-card">
+            <h3>Classrooms</h3>
+            <p>Teaching rooms for lectures, workshops, and group sessions.</p>
+          </article>
+          <article class="category-card">
+            <h3>Labs</h3>
+            <p>Computer and practical labs for technical sessions.</p>
+          </article>
+          <article class="category-card">
+            <h3>Sports Areas</h3>
+            <p>Courts, grounds, and activity zones for student recreation.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="featured-resources" aria-labelledby="featured-title">
+        <div class="section-heading">
+          <p>Popular spaces</p>
+          <h2 id="featured-title">Featured Resources</h2>
+        </div>
+        <div id="resource-message" class="message" aria-live="polite"></div>
+        <!-- js/main.js fills this from GET /api/resources so the cards never
+             drift from the database (and never point at a missing image file). -->
+        <div id="featured-resources" class="resource-grid"></div>
+      </section>
+
+      <section class="how-it-works" aria-labelledby="how-title">
+        <div class="section-heading">
+          <p>Simple process</p>
+          <h2 id="how-title">How It Works</h2>
+        </div>
+        <ol class="steps-list">
+          <li>
+            <h3>Search</h3>
+            <p>Browse resources by category, location, capacity, and availability.</p>
+          </li>
+          <li>
+            <h3>Select</h3>
+            <p>Open the resource details page and choose your date and time slot.</p>
+          </li>
+          <li>
+            <h3>Book</h3>
+            <p>Submit your booking request and receive confirmation.</p>
+          </li>
+        </ol>
+      </section>
+
+      <section class="campus-statistics" aria-labelledby="stats-title">
+        <div class="section-heading">
+          <p>Campus overview</p>
+          <h2 id="stats-title">Campus Statistics</h2>
+        </div>
+        <dl class="stats-grid">
+          <div>
+            <dt>Resources</dt>
+            <dd>120+</dd>
+          </div>
+          <div>
+            <dt>Daily Bookings</dt>
+            <dd>300+</dd>
+          </div>
+          <div>
+            <dt>Departments</dt>
+            <dd>25</dd>
+          </div>
+          <div>
+            <dt>Available Categories</dt>
+            <dd>8</dd>
+          </div>
+        </dl>
+      </section>
+
+      <section class="cta-section" aria-labelledby="cta-title">
+        <h2 id="cta-title">Ready to reserve a campus resource?</h2>
+        <p>Log in with your student account and book the space you need.</p>
+        <a class="button button--primary" href="login.html">Login to Book</a>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <section aria-labelledby="footer-title">
+        <h2 id="footer-title">Campus Resource Booking</h2>
+        <p>Helping students and administrators manage campus spaces efficiently.</p>
+      </section>
+      <nav aria-label="Footer navigation">
+        <ul>
+          <li><a href="resources.html">Resources</a></li>
+          <li><a href="login.html">Login</a></li>
+          <li><a href="register.html">Register</a></li>
+        </ul>
+      </nav>
+      <p>&copy; 2026 Campus Resource Booking System.</p>
+    </footer>
+
+        <script src="js/api.js"></script>
+        <script src="js/ui.js"></script>
+        <script src="js/auth.js"></script>
+        <script src="js/main.js"></script>
+     </body>
+    </html>

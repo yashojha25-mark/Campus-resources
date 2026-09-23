@@ -1,0 +1,293 @@
+/* dashboard.css — student dashboard layout.
+   Reuses the design tokens declared in style.css. */
+
+/* --- welcome banner (1) + quick booking (5) ----------------------------- */
+
+.dashboard-hero {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-5);
+  margin-top: var(--space-6);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-6);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-sm);
+}
+
+.dashboard-hero__eyebrow {
+  margin-bottom: var(--space-2);
+  color: var(--color-accent-dark);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.dashboard-hero h1 {
+  margin-bottom: var(--space-3);
+  font-size: clamp(1.75rem, 3.4vw, 2.75rem);
+}
+
+.dashboard-hero__text p:last-child {
+  margin-bottom: 0;
+  max-width: 60ch;
+}
+
+.dashboard-hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
+/* --- counters ----------------------------------------------------------- */
+
+.dashboard-stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-4);
+  margin-top: var(--space-5);
+}
+
+.stat-card {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-4) var(--space-5);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-sm);
+}
+
+.stat-card__label {
+  margin-bottom: var(--space-1);
+  color: var(--color-muted);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.stat-card__value {
+  margin: 0;
+  color: var(--color-navy-950);
+  font-size: 1.9rem;
+  font-weight: 800;
+  line-height: 1.1;
+}
+
+/* --- global feedback ---------------------------------------------------- */
+
+.dashboard-feedback {
+  margin-top: var(--space-4);
+}
+
+/* --- two-column layout -------------------------------------------------- */
+
+.dashboard-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 320px;
+  align-items: start;
+  gap: var(--space-5);
+  margin: var(--space-5) auto var(--space-7);
+  width: min(100% - 2rem, var(--container));
+}
+
+.dashboard-main {
+  display: grid;
+  gap: var(--space-5);
+}
+
+.dashboard-section {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-5);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-sm);
+}
+
+.dashboard-section__head {
+  margin-bottom: var(--space-4);
+}
+
+.dashboard-section__head h2 {
+  margin-bottom: var(--space-1);
+  font-size: 1.25rem;
+}
+
+.dashboard-section__head p {
+  margin-bottom: 0;
+  font-size: 0.9rem;
+}
+
+/* --- booking cards ------------------------------------------------------ */
+
+.booking-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-4);
+}
+
+/* A lone status/loading block spans the full row. */
+.booking-grid .state {
+  grid-column: 1 / -1;
+}
+
+/* .resource-card already provides the border/shadow/hover from cards.css. */
+.booking-grid .resource-card__body {
+  padding: var(--space-4);
+}
+
+.booking-grid .resource-card__meta div {
+  border-top: none;
+  padding-block: var(--space-2);
+}
+
+.booking-grid .resource-card__meta div:first-child {
+  border-top: 1px solid var(--color-border);
+}
+
+.booking-grid .resource-card__meta div:last-child {
+  border-bottom: 1px solid var(--color-border);
+}
+
+.booking-grid .resource-card__status {
+  margin-bottom: 0;
+  font-size: 0.9rem;
+}
+
+/* --- profile panel (6) -------------------------------------------------- */
+
+.panel {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-5);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-sm);
+}
+
+.panel h2 {
+  margin-bottom: var(--space-4);
+  font-size: 1.25rem;
+}
+
+.profile-list {
+  display: grid;
+  gap: var(--space-3);
+  margin: 0;
+}
+
+.profile-list > div {
+  display: grid;
+  gap: 2px;
+  border-bottom: 1px solid var(--color-border);
+  padding-bottom: var(--space-3);
+}
+
+.profile-list > div:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.profile-list dt {
+  color: var(--color-muted);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.profile-list dd {
+  margin: 0;
+  color: var(--color-navy-950);
+  font-weight: 700;
+  overflow-wrap: anywhere;
+}
+
+/* --- responsive --------------------------------------------------------- */
+
+@media (max-width: 1024px) {
+  .dashboard-layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .booking-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .dashboard-hero {
+    padding: var(--space-5);
+  }
+}
+
+@media (max-width: 720px) {
+  .dashboard-stats {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .dashboard-hero {
+    padding: var(--space-4);
+  }
+
+  .dashboard-hero__actions .button {
+    width: 100%;
+  }
+
+  .dashboard-layout {
+    width: min(100% - 1rem, var(--container));
+  }
+
+  /* Booking card actions stack so cancel / view links stay tappable. */
+  .booking-card__actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+
+/* --- "All Bookings" page (my-bookings.html) ----------------------------- */
+/* Shares the .booking-grid and card styling above, so the two pages can never
+   drift apart. The filter form reuses .resource-filters from style.css. */
+
+#booking-filters {
+  grid-template-columns: auto minmax(180px, 1fr) auto minmax(180px, 260px);
+}
+
+/* The container is a grid, so its single .state / .empty child spans the row. */
+#bookings-container.booking-grid > .state {
+  grid-column: 1 / -1;
+}
+
+#bookings-container.booking-grid .resource-card__body {
+  padding: var(--space-4);
+}
+
+#bookings-container.booking-grid .resource-card__meta div {
+  border-top: none;
+  padding-block: var(--space-2);
+}
+
+#bookings-container.booking-grid .resource-card__meta div:first-child {
+  border-top: 1px solid var(--color-border);
+}
+
+#bookings-container.booking-grid .resource-card__meta div:last-child {
+  border-bottom: 1px solid var(--color-border);
+}
+
+@media (max-width: 1024px) {
+  #booking-filters {
+    grid-template-columns: auto minmax(0, 1fr) auto minmax(0, 1fr);
+  }
+
+  #bookings-container.booking-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  #booking-filters {
+    grid-template-columns: 1fr;
+  }
+}

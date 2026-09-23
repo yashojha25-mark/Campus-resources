@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Resources | Campus Resource Booking</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/navbar.css" />
+       <link rel="stylesheet" href="css/cards.css" />
+       <link rel="stylesheet" href="css/filters.css" />
+    </head>
+    <body>
+       <header class="site-header">
+      <nav class="navbar" aria-label="Main navigation">
+        <a class="navbar__brand" href="index.html">Campus Resource Booking</a>
+        <button class="navbar__toggle" type="button" aria-label="Toggle navigation" aria-expanded="false">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+        <ul class="navbar__links">
+          <!-- Shown while logged out -->
+          <li data-auth="guest"><a href="resources.html">Resources</a></li>
+          <li data-auth="guest"><a href="login.html">Login</a></li>
+          <li data-auth="guest"><a href="register.html">Register</a></li>
+
+          <!-- Shown while logged in -->
+          <li data-auth="user" hidden><a href="dashboard.html">Dashboard</a></li>
+          <li data-auth="user" hidden><a href="resources.html">Resources</a></li>
+          <li data-auth="user" hidden><a href="my-bookings.html">All Bookings</a></li>
+          <li data-auth="user" data-auth-role="admin" hidden><a href="admin.html">Admin</a></li>
+          <li data-auth="user" hidden>
+            <span class="navbar__user" data-auth-user-name></span>
+          </li>
+          <li data-auth="user" hidden><button class="navbar__logout" type="button" id="logout-button">Logout</button></li>
+        </ul>
+      </nav>
+    </header>
+
+    <main>
+      <section class="page-header" aria-labelledby="resources-title">
+        <h1 id="resources-title">Available Resources</h1>
+        <p>Browse campus facilities and choose a resource to view details.</p>
+      </section>
+
+      <section class="resource-filters" aria-labelledby="resource-filters-title">
+        <h2 id="resource-filters-title" class="visually-hidden">Filter resources</h2>
+
+        <!-- Filters run on the client after one fetch (see resources.js). The
+             same values are supported as query params by GET /api/resources. -->
+        <form id="resource-filter-form" role="search" autocomplete="off">
+          <div class="filter-field filter-field--search">
+            <label for="resource-search">Search</label>
+            <input
+              id="resource-search"
+              name="search"
+              type="search"
+              placeholder="Search by resource name…"
+            />
+          </div>
+
+          <div class="filter-field">
+            <label for="resource-category">Category</label>
+            <!-- Options are built from the API's distinct categories -->
+            <select id="resource-category" name="category">
+              <option value="">All categories</option>
+            </select>
+          </div>
+
+          <div class="filter-field">
+            <label for="resource-location">Location</label>
+            <!-- Options are built from the API's distinct locations -->
+            <select id="resource-location" name="location">
+              <option value="">All locations</option>
+            </select>
+          </div>
+
+          <div class="filter-field">
+            <label for="resource-min-capacity">Min. capacity</label>
+            <input
+              id="resource-min-capacity"
+              name="minCapacity"
+              type="number"
+              min="1"
+              step="1"
+              placeholder="Any"
+              inputmode="numeric"
+            />
+          </div>
+
+          <div class="filter-field">
+            <label for="resource-availability">Availability</label>
+            <select id="resource-availability" name="available">
+              <option value="">All</option>
+              <option value="true">Available</option>
+              <option value="false">Unavailable</option>
+            </select>
+          </div>
+
+          <div class="filter-actions">
+            <button type="button" class="button button--ghost" id="resource-filter-clear" hidden>
+              Clear filters
+            </button>
+          </div>
+        </form>
+
+        <!-- Active-filter chips, e.g. "computer ×" "Available ×" -->
+        <div id="resource-active-filters" class="active-filters" hidden aria-live="polite"></div>
+      </section>
+
+      <section class="resource-list" aria-labelledby="resource-list-title">
+        <div class="results-bar">
+          <h2 id="resource-list-title">Resource List</h2>
+          <!-- Politely announces the result count as filters change -->
+          <p class="results-status" id="resource-message" role="status" aria-live="polite"></p>
+        </div>
+        <div id="resources-container" class="resource-grid"></div>
+      </section>
+    </main>
+
+        <script src="js/api.js"></script>
+        <script src="js/ui.js"></script>
+        <script src="js/auth.js"></script>
+        <script src="js/resources.js"></script>
+        <script src="js/main.js"></script>
+     </body>
+    </html>
